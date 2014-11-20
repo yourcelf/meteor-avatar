@@ -60,7 +60,7 @@ Avatar = {
     defaultUrl = Avatar.options.defaultAvatarUrl;
 
     // If it's a relative path (no '//' anywhere), complete the URL
-    if (defaultUrl.indexOf('//') === -1) {
+    if (defaultUrl && defaultUrl.indexOf('//') === -1) {
 
       // Strip starting slash if it exists
       if (defaultUrl.charAt(0) === '/') defaultUrl = defaultUrl.slice(1);
@@ -110,16 +110,13 @@ Avatar = {
         if (_.contains(validGravatars, Avatar.options.gravatarDefault)) {
           gravatarDefault = Avatar.options.gravatarDefault;
         }
-        else {
-          gravatarDefault = '404';
-        }
 
         var options = {
           // NOTE: Gravatar's default option requires a publicly accessible URL,
           // so it won't work when your app is running on localhost and you're
           // using either the standard default URL or a custom defaultAvatarUrl
           // that is a relative path (e.g. 'images/defaultAvatar.png').
-          default: gravatarDefault || defaultUrl,
+          default: gravatarDefault || defaultUrl || "404",
           size: 200, // use 200x200 like twitter and facebook above (might be useful later)
           secure: Meteor.isClient && window.location.protocol === 'https:'
         };
